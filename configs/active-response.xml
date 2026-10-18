@@ -1,0 +1,9 @@
+<!-- configs/active-response.xml -->
+<!-- Agregar dentro de <ossec_config> en /var/ossec/etc/ossec.conf del wazuh-server -->
+<!-- Bloquea 3 minutos la IP atacante cuando salta la regla 100101 (fuerza bruta SSH) -->
+<active-response>
+  <command>firewall-drop</command>
+  <location>local</location>
+  <rules_id>100101</rules_id>
+  <timeout>180</timeout>
+</active-response>

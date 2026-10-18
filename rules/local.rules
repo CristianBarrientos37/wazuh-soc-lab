@@ -1,0 +1,3 @@
+# rules/local.rules
+# Copiar a /var/lib/suricata/rules/local.rules en ubuntu-victim
+alert tcp any any -> $HOME_NET any (msg:"LAB Possible port scan (SYN)"; flags:S; detection_filter: track by_src, count 20, seconds 5; classtype:attempted-recon; sid:1000001; rev:1;)

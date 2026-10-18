@@ -1,0 +1,6 @@
+<!-- configs/agent-ubuntu-eve-json.xml -->
+<!-- Agregar dentro de <ossec_config> en /var/ossec/etc/ossec.conf del agente ubuntu-victim -->
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/suricata/eve.json</location>
+</localfile>

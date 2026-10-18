@@ -1,0 +1,33 @@
+<!-- rules/local_rules.xml -->
+<!-- Pegar al final de /var/ossec/etc/rules/local_rules.xml en wazuh-server -->
+<group name="local,lab,">
+
+  <!-- Escaneo de puertos detectado por la regla propia de Suricata -->
+  <rule id="100100" level="10">
+    <if_sid>86601</if_sid>
+    <field name="alert.signature">LAB Possible port scan</field>
+    <description>LAB: posible escaneo de puertos desde $(src_ip) (Suricata)</description>
+    <mitre><id>T1046</id></mitre>
+    <group>recon,</group>
+  </rule>
+
+  <!-- Fuerza bruta SSH: 8 fallos en 2 minutos desde la misma IP -->
+  <rule id="100101" level="12" frequency="8" timeframe="120">
+    <if_matched_sid>5760</if_matched_sid>
+    <same_source_ip />
+    <description>LAB: fuerza bruta SSH desde $(srcip) (8 fallos en 2 min)</description>
+    <mitre><id>T1110.001</id></mitre>
+    <group>authentication_failures,</group>
+  </rule>
+
+  <!-- Usuario agregado al grupo local de administradores en Windows (evento 4732) -->
+  <rule id="100102" level="12">
+    <if_sid>60103</if_sid>
+    <field name="win.system.eventID">^4732$</field>
+    <field name="win.eventdata.targetUserName">^Administrators$|^Administradores$</field>
+    <description>LAB: usuario agregado al grupo Administrators en $(win.system.computer)</description>
+    <mitre><id>T1098</id></mitre>
+    <group>account_changed,</group>
+  </rule>
+
+</group>
